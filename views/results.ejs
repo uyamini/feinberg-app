@@ -1,0 +1,38 @@
+<!-- views/results.ejs -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Database Query Results</title>
+  <link rel="stylesheet" href="/css/tailwind.css">
+</head>
+<body>
+  <div>
+    <h1>Query Results</h1>
+    <% if (data && data.length > 0) { %>
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <% Object.keys(data[0]).forEach(function(key) { %>
+                <th><%= key %></th>
+              <% }); %>
+            </tr>
+          </thead>
+          <tbody>
+            <% data.forEach(function(row, i) { %>
+              <tr>
+                <% Object.values(row).forEach(function(value) { %>
+                  <td><%= value %></td>
+                <% }); %>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    <% } else { %>
+      <p>No data found.</p>
+    <% } %>
+  </div>
+</body>
+</html>
