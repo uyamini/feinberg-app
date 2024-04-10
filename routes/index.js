@@ -1,25 +1,36 @@
-//routes/index.js
 const express = require('express');
 const router = express.Router();
-const databaseController = require('../controllers/databaseController');
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+const sequelize = require('../config/database');
 
-const API_KEY = '53aa2cd6';
-const URL = 'https://www.omdbapi.com/?apikey=' + API_KEY + '&t=';
+router.get('/', (req, res) => {
+  res.render('index');
+});
 
-router.get('/', (req, res) => res.render('index'));
-router.post('/', databaseController.getData);
+// Route for database data retrieval
+router.post('/fetch-data', async (req, res) => {
+  const { tableName, columns } = req.body; // Assuming you have a form that submits these fields
+  const query = `SELECT ${columns || '*'} FROM ${tableName}`;
+  try {
+    const [results, metadata] = await sequelize.query(query);
+    res.render('results', { results });
+  } catch (error) {
+    console.error(error);
+    res.send('Error retrieving data');
+  }
+});
 
-router.get('/api', function(req, res) {
-    res.render('api', {title: 'API Data'});
-    });
-    
-router.get('/get-movie', async function(req, res) {
-    const movieSearch = req.query.t;
-    const response = await fetch(URL + movieSearch);
-    const data = await response.json();
-    res.json(data);
-    });
-
-router.post('/data', databaseController.getData);
+// Route for API data retrieval
+router.get('/fetch-api-data', async (req, res) => {
+    const { apiEndpoint } = req.query;
+    try {
+      const response = await fetch(apiEndpoint);
+      const data = await response.json();
+      res.render('apiData', { data });
+    } catch (error) {
+      console.error('Error fetching API data:', error);
+      res.status(500).send('Error fetching API data');
+    }
+  });
 
 module.exports = router;

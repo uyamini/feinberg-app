@@ -1,38 +1,32 @@
-<!-- views/results.ejs -->
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Database Query Results</title>
-  <link rel="stylesheet" href="/css/tailwind.css">
+    <title>Database Results</title>
+    <link href="/css/output.css" rel="stylesheet">
 </head>
-<body>
-  <div>
-    <h1>Query Results</h1>
-    <% if (data && data.length > 0) { %>
-      <div>
-        <table>
-          <thead>
-            <tr>
-              <% Object.keys(data[0]).forEach(function(key) { %>
-                <th><%= key %></th>
-              <% }); %>
-            </tr>
-          </thead>
-          <tbody>
-            <% data.forEach(function(row, i) { %>
-              <tr>
-                <% Object.values(row).forEach(function(value) { %>
-                  <td><%= value %></td>
+<body class="m-4">
+    <h1 class="text-xl font-bold mb-4">Database Query Results</h1>
+    <% if (results && results.length > 0) { %>
+        <table class="table-auto border-collapse border border-gray-400">
+            <thead>
+                <tr>
+                    <% Object.keys(results[0]).forEach(function(column) { %>
+                        <th class="border border-gray-300 px-4 py-2 text-gray-600"><%= column %></th>
+                    <% }); %>
+                </tr>
+            </thead>
+            <tbody>
+                <% results.forEach(function(row) { %>
+                    <tr>
+                        <% Object.values(row).forEach(function(value) { %>
+                            <td class="border border-gray-300 px-4 py-2"><%= value %></td>
+                        <% }); %>
+                    </tr>
                 <% }); %>
-              </tr>
-            <% }); %>
-          </tbody>
+            </tbody>
         </table>
-      </div>
     <% } else { %>
-      <p>No data found.</p>
+        <p>No data found.</p>
     <% } %>
-  </div>
 </body>
 </html>

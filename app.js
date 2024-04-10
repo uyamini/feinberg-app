@@ -1,26 +1,20 @@
-//app.js
 require('dotenv').config();
 const express = require('express');
-const sequelize = require('./config/database');
-const indexRouter = require('./routes/index');
+const path = require('path');
 
 const app = express();
 
-//Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
+// Setting up EJS as the view engine
 app.set('view engine', 'ejs');
-app.use('/', indexRouter);
+app.set('views', path.join(__dirname, 'views'));
 
-//Server
+// Middleware for parsing request bodies and serving static files
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Define routes
+app.use('/', require('./routes/index'));
+
+// Listening on port 3000
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, async () => {
-  console.log(`Server running on port ${PORT}.`);
-  try {
-    await sequelize.authenticate();
-    console.log('Database connected.');
-  } catch (err) {
-    console.error('Unable to connect to the database:', err);
-  }
-});
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -1,16 +1,11 @@
-<!-- views/api.ejs -->
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>API Data</title>
-  <link rel="stylesheet" href="/css/tailwind.css">
-  <script defer src="/javascripts/script.js"></script>
+    <title>API Results</title>
+    <link href="/css/output.css" rel="stylesheet">
 </head>
-<body>
-<form id="data-form" action="/get-movie" method="POST">
-    <input type="text" placeholder="Movie Title" required />
-    <input type="submit" value="Get Movie Info" />
-</form>
+<body class="m-4">
+    <h1 class="text-xl font-bold mb-4">API Data Results</h1>
+    <pre><%= JSON.stringify(data, null, 2) %></pre>
 </body>
 </html>

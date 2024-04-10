@@ -1,31 +1,22 @@
-<!-- views/index.ejs -->
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Dynamic Data Retrieval</title>
-  <link href="/css/tailwind.css" rel="stylesheet">
+    <title>Home</title>
+    <link href="/css/output.css" rel="stylesheet">
 </head>
-<body>
-  <div>
-    <h1>Data Retrieval Form</h1>
-    <form id="data-form" action="/data" method="POST">
-      <div>
-        <label for="table-name">Table Name:</label>
-        <input type="text" id="table-name" name="tableName" required>
-      </div>
-      <div>
-        <label for="column-names">Column Names (comma-separated):</label>
-        <input type="text" id="column-names" name="columnNames">
-      </div>
-      <div>
-        <input type="checkbox" id="all-columns" name="allColumns">
-        <label for="all-columns">Select All Columns</label>
-      </div>
-      <button type="submit">
-        Submit
-      </button>
+<body class="m-4">
+    <h1 class="text-xl font-bold mb-4">Data Fetching Application</h1>
+    <h2>Database Data Retrieval</h2>
+    <form action="/fetch-data" method="post">
+        <input type="text" name="tableName" placeholder="Table Name" required>
+        <input type="text" name="columns" placeholder="Columns (comma-separated)">
+        <button type="submit">Fetch Data</button>
     </form>
-  </div>
+
+    <h2>API Data Retrieval</h2>
+    <form action="/fetch-api-data" method="get">
+        <input type="text" name="apiEndpoint" placeholder="API Endpoint" required>
+        <button type="submit">Fetch API Data</button>
+    </form>
 </body>
 </html>
